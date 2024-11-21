@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 
-engine = sa.create_engine("sqlite:///aula02/BD/vendas.db")
+engine = sa.create_engine('sqlite:///C:/temp/PANDA/PUC/BANCO_DE_DADOS_RELACIONAL/aula02/vendas.db')
+
 
 import sqlalchemy.orm as orm
 
@@ -27,14 +28,14 @@ class fornecedor(base):
     nome_fantasia = sa.Column(sa.VARCHAR(100), nullable = False)
     razao_social = sa.Column(sa.VARCHAR(100), nullable = False)
     cidade = sa.Column(sa.VARCHAR(50), nullable = False)
-    uf = sa.Column(sa.CHAR(2))
+    uf = sa.Column(sa.CHAR(2), nullable = False)
 
 #tb produto
 class produto(base):
     __tablename__ = "produto"
     
     codigo_barras = sa.Column(sa.INTEGER, nullable = False, primary_key = True, index = True)
-    registro_fornecedor = sa.Column(sa.INTEGER, sa.ForeignKey("fornecedor.registro)fornecedor", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
+    registro_fornecedor = sa.Column(sa.INTEGER, sa.ForeignKey("fornecedor.registro_fornecedor", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
     dc_produto = sa.Column(sa.VARCHAR(100), nullable = False)
     genero = sa.Column(sa.CHAR(1))
 
@@ -53,7 +54,7 @@ class venda(base):
     
     idTransacao = sa.Column(sa.INTEGER, nullable = False, primary_key = True, index = True)
     cpf = sa.Column(sa.CHAR(14), sa.ForeignKey("cliente.cpf", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
-    codigo_barras = sa.Column(sa.INTEGER, sa.ForeignKey("produto.cod_barras", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
+    codigo_barras = sa.Column(sa.INTEGER, sa.ForeignKey("produto.codigo_barras", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
     registro_vendedor = sa.Column(sa.INTEGER, sa.ForeignKey("vendedor.registro_vendedor", ondelete="NO ACTION", onupdate="CASCADE"), index = True)
     vlr_venda = sa.Column(sa.DECIMAL(10,2), nullable = False)
     data_hora_venda = sa.Column(sa.DATETIME(), nullable = False)
